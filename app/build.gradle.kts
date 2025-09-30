@@ -52,7 +52,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-
+    implementation(libs.retrofit)
+    implementation(libs.converter.kotlinx.serialization)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
