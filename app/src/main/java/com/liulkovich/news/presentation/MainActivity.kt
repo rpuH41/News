@@ -1,16 +1,13 @@
 package com.liulkovich.news.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.lifecycle.lifecycleScope
-import com.liulkovich.news.domain.repository.NewsRepository
 import com.liulkovich.news.presentation.screen.subscriptions.SubscriptionsScreen
 import com.liulkovich.news.presentation.ui.theme.NewsTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -21,7 +18,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewsTheme {
                 SubscriptionsScreen(
-                    onNavigateToSettings = {}
+                    onNavigateToSettings = {
+                        val intent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, "Hello world")
+                        }
+                        startActivity(intent)
+                    }
                 )
             }
         }
