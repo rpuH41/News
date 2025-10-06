@@ -1,6 +1,5 @@
 package com.liulkovich.news.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,11 +18,7 @@ class MainActivity : ComponentActivity() {
             NewsTheme {
                 SubscriptionsScreen(
                     onNavigateToSettings = {
-                        val intent = Intent(Intent.ACTION_SEND).apply {
-                            type = "text/plain"
-                            putExtra(Intent.EXTRA_TEXT, "Hello world")
-                        }
-                        startActivity(intent)
+
                     }
                 )
             }
