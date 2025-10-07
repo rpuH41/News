@@ -3,6 +3,7 @@ package com.liulkovich.news.data.mapper
 import com.liulkovich.news.data.local.ArticleDbModel
 import com.liulkovich.news.data.remote.NewsResponseDto
 import com.liulkovich.news.domain.entity.Article
+import com.liulkovich.news.domain.entity.Interval
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -30,6 +31,10 @@ fun List<ArticleDbModel>.toEntities(): List<Article> {
             url = it.url
         )
     }.distinct()
+}
+
+fun Int.toInterval(): Interval {
+    return Interval.entries.first { it.minutes == this }
 }
 
 private fun String.toTimestamp(): Long {
