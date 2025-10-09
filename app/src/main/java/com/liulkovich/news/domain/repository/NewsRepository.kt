@@ -1,11 +1,14 @@
 package com.liulkovich.news.domain.repository
 
 import com.liulkovich.news.domain.entity.Article
+import com.liulkovich.news.domain.entity.RefreshConfig
 import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
 
     fun getAllSubscriptions(): Flow<List<String>>
+
+     fun startBackgroundRefresh(refreshConfig: RefreshConfig)
 
     suspend fun addSubscription(topic: String)
 

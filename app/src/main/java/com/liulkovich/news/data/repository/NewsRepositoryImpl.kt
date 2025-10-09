@@ -12,7 +12,6 @@ import com.liulkovich.news.data.local.NewsDao
 import com.liulkovich.news.data.local.SubscriptionDbModel
 import com.liulkovich.news.data.mapper.toDbModels
 import com.liulkovich.news.data.mapper.toEntities
-import com.liulkovich.news.data.mapper.toRefreshConfig
 import com.liulkovich.news.data.remote.NewsApiService
 import com.liulkovich.news.domain.entity.Article
 import com.liulkovich.news.domain.entity.RefreshConfig
@@ -23,11 +22,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -40,14 +36,6 @@ class NewsRepositoryImpl @Inject constructor(
 ): NewsRepository {
 
     private val scope = CoroutineScope(Dispatchers.IO)
-
-    init {
-        settingsRepository.getSettings()
-            .map { it.toRefreshConfig() }
-            .distinctUntilChanged()
-            .onEach { startBackgroundRefresh(it) }
-            .launchIn(scope)
-    }
 
     override fun getAllSubscriptions(): Flow<List<String>> {
         return newsDao.getAllSubscriptions().map{ subscriptions ->
@@ -98,7 +86,7 @@ class NewsRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun startBackgroundRefresh(refreshConfig: RefreshConfig) {
+     override fun startBackgroundRefresh(refreshConfig: RefreshConfig) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(
                 if (refreshConfig.wifiOnly) {
