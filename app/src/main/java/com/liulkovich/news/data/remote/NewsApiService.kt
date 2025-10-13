@@ -7,6 +7,7 @@ interface NewsApiService {
 
     @GET("v2/everything?apiKey=179e49438a6849adbd12ffa98c82d747")
     suspend fun loadArticles(
-        @Query("q") topic: String
+        @Query("q") topic: String,
+        @Query("language") language: String
     ): NewsResponseDto
 }

@@ -4,6 +4,7 @@ import com.liulkovich.news.data.local.ArticleDbModel
 import com.liulkovich.news.data.remote.NewsResponseDto
 import com.liulkovich.news.domain.entity.Article
 import com.liulkovich.news.domain.entity.Interval
+import com.liulkovich.news.domain.entity.Language
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -31,6 +32,15 @@ fun List<ArticleDbModel>.toEntities(): List<Article> {
             url = it.url
         )
     }.distinct()
+}
+
+fun Language.toQueryParam(): String {
+    return when(this){
+        Language.ENGLISH -> "en"
+        Language.RUSSIAN -> "ru"
+        Language.FRENCH -> "fr"
+        Language.GERMAN -> "de"
+    }
 }
 
 fun Int.toInterval(): Interval {
